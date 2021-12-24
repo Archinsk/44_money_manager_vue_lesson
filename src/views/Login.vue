@@ -1,9 +1,18 @@
 <template>
-  <form class="card auth-card">
+  <form @submit.prevent="submitHandler" class="card auth-card">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
-        <input id="email" type="text" class="validate" />
+        <input
+          id="email"
+          type="text"
+          v-model.trim="email"
+          :class="{
+            invalid:
+              ($v.email.$dirty && !$v.email.required) ||
+              ($v.email.$dirty && !$v.email.email),
+          }"
+        />
         <label for="email">Email</label>
         <small class="helper-text invalid">Email</small>
       </div>
@@ -23,15 +32,33 @@
 
       <p class="center">
         Нет аккаунта?
-        <a href="/">Зарегистрироваться</a>
+        <router-link to="/register">Зарегистрироваться</router-link>
       </p>
     </div>
   </form>
 </template>
 
 <script>
+import { email, required, minLength } from "@vuelidate/validators";
 export default {
   name: "Login",
+  data: () => ({
+    email: "",
+    password: "",
+  }),
+  validation: {
+    email: { email, required },
+    password: { required, minLength: minLength(6) },
+  },
+  methods: {
+    submitHandler() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
