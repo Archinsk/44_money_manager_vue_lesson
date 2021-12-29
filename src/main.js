@@ -10,7 +10,7 @@ import "materialize-css/dist/js/materialize.min";
 import messagePlugin from "@/utils/message.plugin";
 
 import { initializeApp } from "firebase/app";
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 // import {} from "firebase/database";
 // import firebase from "firebase/app";
 import "firebase/auth";
@@ -26,6 +26,8 @@ Vue.filter("date", dateFilter);
 const firebaseConfig = {
   apiKey: "AIzaSyAtNE5nChfivNKb6keTD8tMZx_Kc3VQJn8",
   authDomain: "money-manager-vue-lesson.firebaseapp.com",
+  databaseURL:
+    "https://money-manager-vue-lesson-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "money-manager-vue-lesson",
   storageBucket: "money-manager-vue-lesson.appspot.com",
   messagingSenderId: "207289498933",
@@ -34,12 +36,13 @@ const firebaseConfig = {
 };
 
 const fireApp = initializeApp(firebaseConfig);
+const auth = getAuth(fireApp);
 
 // firebase.initializeApp(firebaseConfig);
 
 let app;
 
-fireApp.getAuth().onAuthStateChanged(() => {
+onAuthStateChanged(auth, () => {
   if (!app) {
     app = new Vue({
       router,
