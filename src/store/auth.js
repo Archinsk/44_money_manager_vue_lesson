@@ -54,8 +54,9 @@ export default {
       console.log(user.uid);
       return user ? user.uid : null;
     },
-    async logout() {
+    async logout({ commit }) {
       await signOut(auth);
+      commit("clearInfo");
     },
   },
 };

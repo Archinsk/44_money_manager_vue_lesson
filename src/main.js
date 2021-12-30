@@ -8,7 +8,7 @@ import store from "./store";
 import dateFilter from "./filters/date.filter";
 import "materialize-css/dist/js/materialize.min";
 import messagePlugin from "@/utils/message.plugin";
-
+import Loader from "./components/app/Loader";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 // import {} from "firebase/database";
@@ -22,6 +22,7 @@ Vue.use(messagePlugin);
 Vue.use(useVuelidate);
 Vue.use(VueCompositionAPI);
 Vue.filter("date", dateFilter);
+Vue.component("Loader", Loader);
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtNE5nChfivNKb6keTD8tMZx_Kc3VQJn8",
